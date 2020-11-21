@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% block titulo %}Lista de Programas{% endblock %}
+{% block contenido %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}  <div class="message" role="status">{{ message }}</div>{% endif %}
+            {% if message.tags == 'error' %}  <div class="errors" role="alert">{{ message }}</div>{% endif %}
+        {% endfor %}
+    {% endif %}
+    <h2>Lista de Personas</h2>
+    <table>
+        <tr>
+            <th>Nombre Completo</th>
+            <th>DNI</th>
+            <th>Sexo</th>
+            <th>Domicilio</th>
+        </tr>
+        {% for persona in personas %}
+            <tr>
+                <td><a href="#">{{ persona.nombre_completo }}</a></td>
+                <td>{{ persona.dni }}</td>
+                <td>{{ persona.sexo }}</td>
+                <td>{{ persona.domicilio }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'programa:asignarform' %}"><button>Asignar un Beneficio</button></a>
+{% endblock %}

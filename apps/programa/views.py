@@ -2,8 +2,8 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from .forms import ProgramaForm
-from .models import Programa
+from .forms import ProgramaForm, AsignacionForm
+from .models import Programa, AsignacionBeneficio
 
 
 def programa_lista(request):
@@ -60,3 +60,27 @@ def programa_edit(request, pk):
         form_programa = ProgramaForm(instance=programa)
 
     return render(request, 'programa/programa_edit.html', {'form': form_programa})
+
+
+
+def AsignarView(request):
+    if request.method == 'POST':
+        form = AsignacionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect ('home')
+    else:
+        form = AsignacionForm()
+    return render(request, 'programa/asignacionForm.html',{'form':form})
+
+def ListaBeneficiosView(request, pk):
+    programa = get_object_or_404(Programa, id = pk)
+    if request.method == 'POST':
+        fecha_inicio = request.POST['fecha_inicio']
+        fecha_fin = request.POST['fecha_fin']
+        beneficios = AsignacionBeneficio.objects.filter(programa_id = pk, fecha_entrega__gte=fecha_inicio, fecha_entrega__lte=fecha_fin)
+    return render(request, 'programa/listaBeneficios.html',{'beneficios':beneficios})
+
+def BuscarBeneficioView(request, pk):
+    programa = get_object_or_404(Programa, id = pk)
+    return render(request, 'programa/buscarBeneficio.html',{'programa':programa})

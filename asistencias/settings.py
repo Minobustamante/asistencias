@@ -77,8 +77,8 @@ WSGI_APPLICATION = 'asistencias.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-
 }
+
 
 
 # Password validation

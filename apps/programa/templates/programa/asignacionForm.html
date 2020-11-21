@@ -1,0 +1,10 @@
+{% extends "base/base.html" %}
+{% block titulo %}Asignar beneficio{% endblock %}
+{% block contenido %}
+    <h1>Asignar beneficios a una persona</h1>
+    <form method="post" enctype="multipart/form-data">
+        {{form.as_p}}
+        {% csrf_token %}
+        <input type="submit" value="Asignar">
+    </form>
+{% endblock %}
